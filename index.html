@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Custom Guitar</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#111;color:white}
+header{padding:25px;text-align:center;background:#181818}
+h1{margin:0;color:#fff}
+.box{max-width:600px;margin:auto;padding:20px}
+.card{background:#1d1d1d;border-radius:18px;padding:20px;margin:15px 0}
+.guitar{font-size:150px;text-align:center;padding:20px}
+label{display:block;margin:15px 0 7px}
+select,input,button{width:100%;padding:14px;border-radius:10px;border:0;font-size:16px;box-sizing:border-box}
+button{background:#27ae60;color:white;font-weight:bold;margin-top:20px}
+.price{font-size:28px;text-align:center;margin:20px}
+</style>
+</head>
+
+<body>
+<header>
+<h1>🎸 CUSTOM GUITAR</h1>
+<p>ออกแบบกีตาร์ของคุณเอง</p>
+</header>
+
+<div class="box">
+
+<div class="card">
+<div class="guitar" id="guitar">🎸</div>
+<h2>ออกแบบกีตาร์</h2>
+
+<label>ประเภทกีตาร์</label>
+<select id="type">
+<option value="0">Acoustic</option>
+<option value="1000">Electric (+฿1,000)</option>
+<option value="1500">Bass (+฿1,500)</option>
+</select>
+
+<label>สี</label>
+<select id="color">
+<option value="0">Natural</option>
+<option value="500">Black (+฿500)</option>
+<option value="500">White (+฿500)</option>
+<option value="700">Red (+฿700)</option>
+<option value="700">Blue (+฿700)</option>
+</select>
+
+<label>ไม้</label>
+<select id="wood">
+<option value="0">Spruce</option>
+<option value="800">Mahogany (+฿800)</option>
+<option value="1200">Rosewood (+฿1,200)</option>
+</select>
+
+<label>จำนวนสาย</label>
+<select id="strings">
+<option value="0">6 สาย</option>
+<option value="800">7 สาย (+฿800)</option>
+<option value="1200">12 สาย (+฿1,200)</option>
+</select>
+
+<label>ข้อความบนกีตาร์</label>
+<input id="name" placeholder="เช่น ATHITAYA">
+
+<div class="price">
+ราคาโดยประมาณ<br>
+<b id="price">฿5,000</b>
+</div>
+
+<button onclick="order()">🛒 สั่งทำกีตาร์</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+<h2>📋 ข้อมูลการสั่งทำ</h2>
+<p id="summary"></p>
+</div>
+
+</div>
+
+<script>
+const base=5000;
+const ids=["type","color","wood","strings"];
+
+function calc(){
+ let p=base;
+ ids.forEach(id=>p+=Number(document.getElementById(id).value));
+ document.getElementById("price").textContent="฿"+p.toLocaleString();
+}
+ids.forEach(id=>document.getElementById(id).onchange=calc);
+
+function order(){
+ let p=base;
+ ids.forEach(id=>p+=Number(document.getElementById(id).value));
+
+ let name=document.getElementById("name").value||"-";
+
+ document.getElementById("summary").innerHTML=
+ "ประเภท: "+document.getElementById("type").selectedOptions[0].text+
+ "<br>สี: "+document.getElementById("color").selectedOptions[0].text+
+ "<br>ไม้: "+document.getElementById("wood").selectedOptions[0].text+
+ "<br>สาย: "+document.getElementById("strings").selectedOptions[0].text+
+ "<br>ข้อความ: "+name+
+ "<br><br><b>ราคาโดยประมาณ: ฿"+p.toLocaleString()+"</b>"+
+ "<br><br>กรุณาติดต่อผู้ทำกีตาร์เพื่อยืนยันรายละเอียดและราคา";
+
+ document.getElementById("result").style.display="block";
+}
+</script>
+</body>
+</html>
